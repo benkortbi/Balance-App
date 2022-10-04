@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="theme-color" content="hsl(27, 66%, 92%)">
+ <meta name="msapplication-navbutton-color" content="hsl(27, 66%, 92%)">
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  
+  <title>Frontend Mentor | Expenses chart component</title>
+  
+  <style>
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+      
+      html {
+          scroll-behavior; smooth;
+     }
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    :root {
+        --softRed: hsl(10, 79%, 65%);
+        --cyan: hsl(186, 34%, 60%);
+        --darkBrown: hsl(25, 47%, 15%);
+        --midBrown: hsl(28, 10%, 53%);
+        --cream: hsl(27, 66%, 92%);
+        --paleOrange: hsl(33, 100%, 98%);
+    }
+    body {
+        font-size: 18px;
+        font-family :'DM sans', sans-serif;
+        background: var(--cream);
+    }
+    .container {
+        width: 100%;
+        min-height: 100vh;
+        position : relative;
+    }
+    .wrapper {
+        width: 95%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -60%);
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        position : absolute;
+    }
+    .balance-section {
+        display: flex;
+        justify-content : space-between ;
+        align-items: center;
+        background: var(--softRed);
+    }
+    .balance-section .details h4 {
+        color: var(--paleOrange);
+        font-weight: 400;
+        font-size: .9rem;
+        margin-block-end: 6px;
+    }
+     .balance-section .details h3 {
+        color: var(--paleOrange);
+        font-weight: 700;
+        font-size: 1.7rem;
+        margin-block-end: 6px;
+    }
+    
+    .chart-section {
+        background: var(--paleOrange);
+        color: var(--darkBrown)
+    }
+    .balance-section,
+    .chart-section {
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
+        position: relative;
+    }
+    
+    #myChart {
+        width: 100%;
+        min-height: 220px;
+        margin-block: 1rem;
+    }
+    .chart-section-info {
+        display: flex;
+        justify-content : space-between ;
+        margin-block-start: 1.5rem;
+    }
+    .chart-section-info .chart-section-spending {
+        display: flex;
+        flex-direction: column; 
+        gap: 10px;
+    }
+    .chart-section-info .chart-section-spending p, .chart-section-info .chart-section-discount p {
+        font-size: .9rem;
+        color: var(--midBrown);
+    }
+    .chart-section-info .chart-section-spending h3{
+        font-size: 2rem;
+        color: var(--darkBrown);
+    }
+    .chart-section-discount {
+    margin-block-start: 1rem;
+        display: flex;
+        flex-direction: column;
+        text-align: end;
+        gap: 2px;
+    }
+     .chart-section-discount span{
+     font-weight: bold;
+    }
+    
+    .attribution {
+        font-size: 15px;
+        position : absolute;
+        bottom: 1%;
+        width: 100%;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+    <div class="wrapper">
+       <div class="balance-section">
+           <div class="details">
+         <h4>My balance</h4>
+         <h3>$921.48</h3>
+         </div>
+         <svg width="72" height="48" viewBox="0 0 72 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><circle fill="#382314" cx="48" cy="24" r="24"/><circle stroke="#FFF" stroke-width="2" cx="24" cy="24" r="23"/></g></svg>
+
+       </div>
+    
+    <div class="chart-section">
+      <h3>Spending - Last 7 days</h3>
+          <canvas id="myChart"></canvas>
+          <div class="chart-section-info">
+                 <div class="chart-section-spending">
+            <p>Total this month</p>
+            <h3>$478.33</h3>
+            </div>
+            
+            <div class="chart-section-discount">
+        <span> +2.4%</span>
+       <p>from last month</p>
+       </div>
+       
+     </div>
+  
+  </div>
+  </div>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="https://github.com/benkortbi" target="_blank">RedhaBenKortbi</a>.
+  </div>
+</div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script>
+const ctx = document.getElementById('myChart').getContext('2d');
+const myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['mon', 'tue', 'wed', 'thu', 'fri','sat','sun'],
+        datasets: [{
+            label: 'Spending',
+            data: [17.45, 34.91, 52.36, 31.07, 23.39, 43.28, 25.48],
+            backgroundColor: [
+              'hsl(10, 79%, 65%)',
+              'hsl(10, 79%, 65%)',
+              'hsl(186, 34%, 60%)',
+              'hsl(10, 79%, 65%)',
+              'hsl(10, 79%, 65%)',
+              'hsl(10, 79%, 65%)',
+              'hsl(10, 79%, 65%)'
+            ],
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    display: false 
+                }
+            }
+        }
+    }
+});
+</script>
+</body>
+</html>
